@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频号特效创作指南</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-color: #FF9933;
+            --primary-dark: #E67A00;
+            --primary-light: #FFB366;
+            --dark-bg: #0F0F0F;
+            --dark-secondary: #1A1A1A;
+            --dark-tertiary: #252525;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A0A0A0;
+            --text-tertiary: #6B6B6B;
+            --border-color: rgba(255, 255, 255, 0.08);
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 15, 15, 0.98);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+        }
+        .nav-logo {
+            font-size: 18px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-logo i { -webkit-text-fill-color: var(--primary-color); font-size: 22px; }
+        .hero {
+            padding: 140px 50px 80px;
+            text-align: center;
+            background: linear-gradient(180deg, #0F0F0F 0%, #151515 100%);
+        }
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #fff 0%, #c0c0c0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin: 40px 0;
+        }
+        .hero-feature {
+            background: rgba(255, 153, 51, 0.08);
+            border: 1px solid rgba(255, 153, 51, 0.2);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .hero-feature:hover {
+            background: rgba(255, 153, 51, 0.15);
+            border-color: rgba(255, 153, 51, 0.4);
+            transform: translateY(-3px);
+        }
+        .hero-feature i {
+            color: var(--primary-color);
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+        .hero-feature h3 {
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .hero-feature p {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        .hero .description {
+            color: var(--text-secondary);
+            font-size: 16px;
+            max-width: 800px;
+            margin: 20px auto 0;
+            line-height: 1.8;
+        }
+        section { padding: 60px 50px; }
+        section h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        section h2 i {
+            color: var(--primary-color);
+            font-size: 28px;
+        }
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: #fff;
+            padding: 18px 40px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+            margin: 30px 0;
+            transition: all 0.3s;
+        }
+        .download-btn:hover { transform: scale(1.05); box-shadow: 0 8px 30px rgba(255, 153, 51, 0.4); }
+        .download-box { max-width: 800px; margin: 0 auto; text-align: center; }
+        .faq-grid { max-width: 1000px; display: flex; flex-direction: column; gap: 15px; }
+        .faq-item {
+            background: var(--dark-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s;
+        }
+        .faq-item:hover { border-color: var(--primary-color); }
+        .faq-item h3 {
+            font-size: 17px;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .faq-item h3 i { color: var(--primary-color); margin-top: 4px; flex-shrink: 0; }
+        .faq-item p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; padding-left: 28px; }
+        .faq-item .link { color: var(--primary-color); text-decoration: none; font-weight: 600; }
+        .new-feature-card {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(255, 153, 51, 0.1), rgba(255, 153, 51, 0.02));
+            border: 1px solid rgba(255, 153, 51, 0.3);
+            border-radius: 16px;
+            padding: 35px;
+        }
+        .new-feature-tag {
+            display: inline-block;
+            background: var(--primary-color);
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        .new-feature-card h3 { font-size: 22px; color: var(--text-primary); margin-bottom: 15px; }
+        .new-feature-card p { font-size: 15px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 20px; }
+        .tutorial-subsection { margin-bottom: 50px; }
+        .tutorial-subsection h3 { font-size: 20px; color: var(--text-primary); margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
+        .tutorial-subsection h3 i { color: var(--primary-color); }
+        .tutorial-links { display: flex; flex-direction: column; gap: 15px; }
+        .tutorial-link {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            background: var(--dark-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .tutorial-link:hover { border-color: var(--primary-color); transform: translateX(5px); }
+        .tutorial-link i { color: var(--primary-color); font-size: 20px; margin-top: 3px; flex-shrink: 0; }
+        .tutorial-link-content h4 { font-size: 16px; color: var(--text-primary); margin-bottom: 6px; }
+        .tutorial-link-content p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .video-card {
+            background: var(--dark-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .video-thumbnail {
+            width: 100%;
+            height: 160px;
+            background: linear-gradient(135deg, var(--dark-tertiary) 0%, var(--dark-secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .video-thumbnail i { color: var(--primary-color); font-size: 48px; }
+        .video-content { padding: 20px; }
+        .video-content h4 { font-size: 15px; color: var(--text-primary); margin-bottom: 8px; }
+        .video-content p { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+        .rule-content {
+            max-width: 1000px;
+            background: var(--dark-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+        }
+        .rule-list { list-style: none; margin: 25px 0; }
+        .rule-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .rule-list li:last-child { border-bottom: none; }
+        .rule-list li i { color: var(--primary-color); margin-top: 4px; flex-shrink: 0; }
+        .rule-list li p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+        .rule-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+        .rule-link:hover { text-decoration: underline; }
+        .resources-grid {
+            max-width: 1000px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .resource-card {
+            background: var(--dark-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s;
+        }
+        .resource-card:hover { border-color: var(--primary-color); }
+        .resource-card i { color: var(--primary-color); font-size: 28px; margin-bottom: 15px; }
+        .resource-card h4 { font-size: 17px; color: var(--text-primary); margin-bottom: 10px; }
+        .resource-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 15px; }
+        .resource-card a { color: var(--primary-color); text-decoration: none; font-weight: 600; font-size: 14px; }
+        .wechat-section {
+            background: linear-gradient(180deg, #151515 0%, #0F0F0F 100%);
+            text-align: center;
+            padding: 100px 50px;
+        }
+        .wechat-section h2 { margin-bottom: 15px; }
+        .wechat-section p { color: var(--text-secondary); margin-bottom: 40px; }
+        .wechat-card {
+            background: var(--dark-secondary);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            border-radius: 20px;
+            display: inline-block;
+            max-width: 380px;
+        }
+        .wechat-card img {
+            max-width: 220px;
+            margin: 0 auto 25px;
+            border-radius: 12px;
+            display: block;
+        }
+        .wechat-card h3 {
+            font-size: 22px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .wechat-card p { font-size: 15px; color: var(--text-secondary); margin: 0; }
+        footer {
+            background: #0A0A0A;
+            padding: 30px 50px;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+        footer p { color: var(--text-tertiary); font-size: 13px; }
+        @media (max-width: 768px) {
+            section { padding: 40px 20px; }
+            .hero { padding: 100px 20px 60px; }
+            .hero h1 { font-size: 32px; }
+            .hero .description { font-size: 14px; }
+            .hero-features { grid-template-columns: 1fr; gap: 15px; }
+            .video-grid { grid-template-columns: 1fr; }
+            .resources-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-logo">
+            <i class="fas fa-sparkles"></i>
+            视频号特效创作指南
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>视频号特效创作全链路指南</h1>
+            <div class="hero-features">
+                <div class="hero-feature">
+                    <i class="fas fa-magic"></i>
+                    <h3>AI 驱动</h3>
+                    <p>智能生成创意特效，提升创作效率</p>
+                </div>
+                <div class="hero-feature">
+                    <i class="fas fa-rocket"></i>
+                    <h3>快速上手</h3>
+                    <p>从零开始，5分钟掌握基础操作</p>
+                </div>
+                <div class="hero-feature">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>流量变现</h3>
+                    <p>获得流量券和现金激励双重收益</p>
+                </div>
+            </div>
+            <p class="description">👋 欢迎来到视频号特效创作世界！视频号特效助手是一款强大的 AI 驱动特效创作工具，帮助创作者快速生成高质量特效内容，并获得平台流量扶持和现金奖励。本指南将带你从工具下载开始，一步步掌握特效创作的完整流程。</p>
+        </div>
+    </section>
+
+    <section>
+        <h2><i class="fas fa-download"></i> 特效助手下载</h2>
+        <div class="download-box">
+            <p style="margin-bottom: 20px; color: var(--text-secondary);">下载「视频号特效助手」官方客户端</p>
+            <a href="https://channels.weixin.qq.com/effect/home" target="_blank" class="download-btn">
+                <i class="fas fa-external-link-alt"></i>
+                前往官网下载
+            </a>
+        </div>
+    </section>
+
+    <section>
+        <h2><i class="fas fa-question-circle"></i> 常见问题</h2>
+        <div class="faq-grid">
+            <div class="faq-item">
+                <h3><i class="fas fa-exclamation-triangle"></i> Windows 启动崩溃或预览问题</h3>
+                <p>问题已修复，请登录官网下载最新版「视频号特效助手」<br>
+                <a href="https://channels.weixin.qq.com/effect/home" target="_blank" class="link">https://channels.weixin.qq.com/effect/home</a></p>
+            </div>
+            <div class="faq-item">
+                <h3><i class="fas fa-tools"></i> 安装提示 camworks 报错问题</h3>
+                <p>可以安装以下软件解决：<a href="VC_redist.x64.exe" download class="link">点击下载 VC_redist.x64.exe</a></p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2><i class="fas fa-magic"></i> AI变身首尾帧新功能（2.11 更新）</h2>
+        <div class="new-feature-card">
+            <span class="new-feature-tag">v2.11 最新版本</span>
+            <h3>图生视频首尾帧模型</h3>
+            <p>新版本内测包带来图生视频首尾帧模型，还有提升整体稳定性（需更新）</p>
+            <a href="https://channels.weixin.qq.com/effect/home" target="_blank" class="download-btn" style="margin: 0; padding: 15px 30px; font-size: 16px;">
+                <i class="fas fa-download"></i>
+                下载最新版本
+            </a>
+        </div>
+    </section>
+
+    <section>
+        <h2><i class="fas fa-graduation-cap"></i> 特效工具使用教程</h2>
+        <div class="tutorial-subsection">
+            <h3><i class="fas fa-file-alt"></i> 文字版教程</h3>
+            <div class="tutorial-links">
+                <a href="https://doc.weixin.qq.com/doc/w3_AZYAxgbhAIQCN3dKwMy56ROCEqcgH?scode=AJEAIQdfAAovvoLvOBAI0Ajga1ACg" target="_blank" class="tutorial-link">
+                    <i class="fas fa-book"></i>
+                    <div class="tutorial-link-content">
+                        <h4>「视频号特效助手」快速入门文档</h4>
+                        <p>企微文档 - 快速了解工具基本功能和使用方法</p>
+                    </div>
+                </a>
+                <a href="https://doc.weixin.qq.com/doc/w3_AZMAGAZRACwCNIkUM4mD0RGyfoOPU?scode=AJEAIQdfAAoRFgfiQYAI0Ajga1ACg" target="_blank" class="tutorial-link">
+                    <i class="fas fa-book"></i>
+                    <div class="tutorial-link-content">
+                        <h4>工具教学</h4>
+                        <p>详细的工具使用教学文档，帮助你快速上手</p>
+                    </div>
+                </a>
+                <a href="https://doc.weixin.qq.com/doc/w3_AX0AMQakAGgCNB0LAY4iyQg66zmaO?scode=AJEAIQdfAAotMPOtv6AI0Ajga1ACg" target="_blank" class="tutorial-link">
+                    <i class="fas fa-book"></i>
+                    <div class="tutorial-link-content">
+                        <h4>图生图效果使用指引</h4>
+                        <p>企微文档 - 详细说明图生图功能的使用步骤和技巧</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="tutorial-subsection">
+            <h3><i class="fas fa-video"></i> 视频版教程</h3>
+            <div class="video-grid">
+                <div class="video-card">
+                    <video controls style="width: 100%; border-radius: 8px; background: #000;">
+                        <source src="视频1_基本功能介绍.mp4" type="video/mp4">
+                        您的浏览器不支持视频播放
+                    </video>
+                    <div class="video-content" style="padding-top: 15px;">
+                        <h4>1）基本功能介绍</h4>
+                        <p>了解视频号特效助手的基本功能和操作界面</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <video controls style="width: 100%; border-radius: 8px; background: #000;">
+                        <source src="视频2_贴纸滤镜类教程.mp4" type="video/mp4">
+                        您的浏览器不支持视频播放
+                    </video>
+                    <div class="video-content" style="padding-top: 15px;">
+                        <h4>2）贴纸滤镜类教程</h4>
+                        <p>学习如何使用贴纸和滤镜功能</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <video controls style="width: 100%; border-radius: 8px; background: #000;">
+                        <source src="视频3_AI图生图类教程.mp4" type="video/mp4">
+                        您的浏览器不支持视频播放
+                    </video>
+                    <div class="video-content" style="padding-top: 15px;">
+                        <h4>3）AI图生图类教程</h4>
+                        <p>掌握AI图生图功能的使用技巧</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2><i class="fas fa-lightbulb"></i> 创作灵感中心</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 30px; text-align: center; max-width: 700px; margin-left: auto; margin-right: auto;">
+            获取创作灵感和热门特效参考，快速找到创作方向，提升发表效率
+        </p>
+        <div class="tutorial-links" style="max-width: 1000px; margin: 0 auto;">
+            <a href="http://134.175.98.166:5001/report" target="_blank" class="tutorial-link">
+                <i class="fas fa-fire"></i>
+                <div class="tutorial-link-content">
+                    <h4>重要节点特效建议 + 热点灵感</h4>
+                    <p>热点特效灵感报告，提供重要节点和热门趋势分析</p>
+                </div>
+            </a>
+            <a href="http://134.175.98.166:8582/prompt-generator.html" target="_blank" class="tutorial-link">
+                <i class="fas fa-wand-magic-sparkles"></i>
+                <div class="tutorial-link-content">
+                    <h4>特效生成工具</h4>
+                    <p>AI 提示词生成器，一键生成可直接使用的提示词</p>
+                </div>
+            </a>
+            <a href="https://docs.qq.com/doc/p/15c65242e2f03475d76c445ac35ec0c89340158d" target="_blank" class="tutorial-link">
+                <i class="fas fa-lightbulb"></i>
+                <div class="tutorial-link-content">
+                    <h4>灵感文档</h4>
+                    <p>获取创作灵感和热门特效参考</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section>
+        <h2><i class="fas fa-check-circle"></i> 特效审核规则</h2>
+        <div class="rule-content">
+            <ul class="rule-list">
+                <li><i class="fas fa-check-circle"></i><p>需要保持特效内容，和特效图标一致性，图标体现玩法</p></li>
+                <li><i class="fas fa-check-circle"></i><p>不可使用影视剧/IP/品牌 logo 等非授权素材内容</p></li>
+                <li><i class="fas fa-check-circle"></i><p>AI类的时长如果不一致，可能会导致不通过。具体时间可以参考：<br>拍摄触发+原图停留时长+生成后停留时长=模板最大时长</p></li>
+            </ul>
+            <a href="https://channels.weixin.qq.com/effect/guide/rule-center/yhOCqKuJGvXE5BIJ" target="_blank" class="rule-link">
+                <i class="fas fa-external-link-alt"></i>
+                查看完整规则：【视频号特效审核规则】
+            </a>
+        </div>
+    </section>
+
+    <section>
+        <h2><i class="fas fa-images"></i> 模特头像素材</h2>
+        <div class="resources-grid">
+            <div class="resource-card">
+                <i class="fas fa-image"></i>
+                <h4>+rar素材</h4>
+                <p>Windows 头像素材压缩包，包含多种模特头像素材供使用</p>
+                <a href="模特头像素材.zip" download>下载素材</a>
+            </div>
+            <div class="resource-card">
+                <i class="fas fa-file-archive"></i>
+                <h4>+rar素材（半身像）</h4>
+                <p>模特半身像素材压缩包，提供更多样化的选择</p>
+                <a href="模特半身像素材.zip" download>下载素材</a>
+            </div>
+            <div class="resource-card">
+                <i class="fas fa-magic"></i>
+                <h4>图像生成工具</h4>
+                <p>只需上传你的特效预览画面截图，即可一键生成满足 300x300像素，体积不得大于200kb 要求的特效图标</p>
+                <a href="https://smartcropper-wxeffect.manus.space" target="_blank">打开工具</a>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2><i class="fas fa-ticket-alt"></i> 流量券激励</h2>
+        <div class="download-box">
+            <p style="margin-bottom: 20px; color: var(--text-secondary);">了解视频号流量券激励政策</p>
+            <a href="https://channels.weixin.qq.com/effect/guide/create-class/TYWlQE9XYmEFe961#" target="_blank" class="download-btn">
+                <i class="fas fa-ticket"></i>
+                查看流量券激励
+            </a>
+        </div>
+    </section>
+
+    <section>
+        <h2><i class="fas fa-coins"></i> 现金激励</h2>
+        <div class="download-box">
+            <p style="margin-bottom: 20px; color: var(--text-secondary);">了解特效分成规则和现金激励政策</p>
+            <a href="https://support.weixin.qq.com/cgi-bin/mmsupportacctnodeweb-bin/pages/WAXrib8cGocX0eYM" target="_blank" class="download-btn">
+                <i class="fas fa-coins"></i>
+                查看特效分成规则
+            </a>
+        </div>
+    </section>
+
+    <section>
+        <h2><i class="fas fa-comment-dots"></i> 特效工具问题反馈</h2>
+        <div class="faq-grid">
+            <div class="faq-item">
+                <h3><i class="fas fa-comment-dots"></i> 问题反馈</h3>
+                <p>如有朋友有问题，无对接运营，可填表反馈<br>
+                <a href="https://doc.weixin.qq.com/forms/AJEAIQdfAAoAI0Ajga1ACgCNKHHulM3xf?page=1" target="_blank" class="link">填写反馈表单</a></p>
+            </div>
+        </div>
+    </section>
+
+    <section class="wechat-section">
+        <h2>关注公众号</h2>
+        <p>获取最新资讯和创作支持</p>
+        <div class="wechat-card">
+            <img src="公众号二维码.png" alt="视频号特效助手二维码" onerror="this.src='data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'220\' height=\'220\'><rect fill=\'%231a1a1a\' width=\'220\' height=\'220\'/><g fill=\'%23FF9933\'><text x=\'110\' y=\'100\' text-anchor=\'middle\' font-size=\'20\' font-weight=\'bold\'>二维码未找到</text><text x=\'110\' y=\'130\' text-anchor=\'middle\' font-size=\'12\' fill=\'%23999\'>请上传公众号二维码.png</text></g></svg>'">
+            <h3>视频号特效助手</h3>
+            <p>扫描二维码关注公众号</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2024 视频号特效创作指南 | 持续更新优化</p>
+    </footer>
+</body>
+</html>
